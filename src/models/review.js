@@ -2,6 +2,11 @@ import mongoose from 'mongoose';
 
 const reviewSchema = new mongoose.Schema(
   {
+    contract: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Contract',
+      required: [true, 'A review must belong to a contract.'],
+    },
     review: {
       type: String,
       required: [true, 'A review is needed.'],
@@ -16,16 +21,6 @@ const reviewSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    reviewer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'A review must belong to a user.'],
-    },
-    reviewee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'A review must be directed to a user.'],
-    },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
@@ -39,10 +34,10 @@ reviewSchema.methods.toJSON = function () {
   return reviewObject;
 };
 
-reviewSchema.pre(/^find/, function (next) {
+/*reviewSchema.pre(/^find/, function (next) {
   this.populate({ path: 'reviewer', select: '-__v -password -_id' });
   next();
-});
+});*/
 
 const Review = mongoose.model('Review', reviewSchema);
 
