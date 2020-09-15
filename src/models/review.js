@@ -39,6 +39,11 @@ reviewSchema.methods.toJSON = function () {
   return reviewObject;
 };
 
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({ path: 'reviewer', select: '-__v -password -_id' });
+  next();
+});
+
 const Review = mongoose.model('Review', reviewSchema);
 
 export default Review;

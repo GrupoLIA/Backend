@@ -1,24 +1,21 @@
 import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema(
-  {
-    /*name:{
+const userSchema = mongoose.Schema({
+  /*name:{
 
       },*/
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: Number,
-      required: true,
-    },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, 'A valid email must be specified.'],
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
-);
+  password: {
+    type: Number,
+    required: true,
+  },
+});
 
-userSchema.methods.toJSON = function () {
+/*userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
 
@@ -26,7 +23,7 @@ userSchema.methods.toJSON = function () {
 
   return userObject;
 };
-
+*/
 const User = mongoose.model('User', userSchema);
 
 export default User;
