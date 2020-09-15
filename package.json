@@ -1,0 +1,33 @@
+{
+  "name": "Backend",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel ./src -d dist/",
+    "start": "npm run build && node dist/app.js",
+    "watch": "nodemon --watch ./src --exec npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrupoLIA/Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrupoLIA/Backend/issues"
+  },
+  "homepage": "https://github.com/GrupoLIA/Backend#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.5"
+  }
+}
