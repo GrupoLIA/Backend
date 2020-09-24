@@ -7,7 +7,11 @@ const reviewSchema = new mongoose.Schema(
       ref: 'Contract',
       required: [true, 'A review must belong to a contract.'],
     },
-    review: {
+    title: {
+      type: String,
+      required: [true, 'A title is required.'],
+    },
+    description: {
       type: String,
       required: [true, 'A review is needed.'],
     },

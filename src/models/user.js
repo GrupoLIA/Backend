@@ -13,6 +13,15 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  categories: [
+    {
+      trade: { type: String },
+      validation_date: { type: Date, default: Date.now },
+      expiracy_date: { type: Date },
+      total_rating: { type: Number, default: 0 },
+      review_count: { type: Number, default: 0 },
+    },
+  ],
 });
 
 /*userSchema.methods.toJSON = function () {

@@ -16,6 +16,9 @@ const contractSchema = mongoose.Schema({
     enum: ['pending', 'expired', 'completed'],
     default: 'pending',
   },
+  trade: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
