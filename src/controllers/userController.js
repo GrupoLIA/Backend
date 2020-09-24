@@ -20,9 +20,9 @@ const createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
 
-    res.status(200).send({ success: true, data: { newUser } });
+    res.status(201).send({ success: true, data: { newUser } });
   } catch (err) {
-    res.status(501).send({ success: false, error: err });
+    res.status(500).send({ success: false, error: err });
   }
 };
 

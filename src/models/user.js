@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     required: [true, 'A valid email must be specified.'],
   },
   password: {
-    type: Number,
+    type: String,
     required: true,
   },
   categories: [
