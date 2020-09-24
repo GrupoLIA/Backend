@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  categories: [
+  trades: [
     {
       trade: { type: String },
       validation_date: { type: Date, default: Date.now },
