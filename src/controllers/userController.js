@@ -16,14 +16,29 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+const signUp = async (req, res) => {
   try {
-    const newUser = await User.create(req.body);
+    const user = new User(req.body);
+    await user.save();
+    const token = await user.generateAuthToken();
 
-    res.status(201).send({ success: true, data: { newUser } });
+    res.status(201).send({ success: true, data: { user, token } });
   } catch (err) {
-    res.status(500).send({ success: false, error: err });
+    res.status(400).send({ success: false, error: err });
   }
 };
 
-export default { getAllUsers, createUser };
+const signIn = async (req, res) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await user.generateAuthToken();
+    res.send({ success: true, data: { user, token } });
+  } catch (err) {
+    res.status(400).send();
+  }
+};
+
+export default { getAllUsers, signIn, signUp };

@@ -1,4 +1,5 @@
 import Review from '../models/review';
+import User from '../models/user';
 
 const getAllReviews = async (req, res) => {
   try {
@@ -16,9 +17,20 @@ const getAllReviews = async (req, res) => {
   }
 };
 
-const createReview = async (req, res) => {
+const getReviewsFromUserByID = async (req, res) => {
   try {
-    const newReview = await Review.create(req.body);
+    /*  const user = await User.findOneById(req.params.id);
+        -- Get all reviews where employee in Contract equals :userID
+        -- populate from review to contract in which employee equals :userID
+    */
+  } catch (err) {}
+};
+
+const createReview = async (req, res) => {
+  const newReview = new Review(req.body);
+  try {
+    await newReview.save();
+    /*  Only possible if the status of the contract the review references equals 'completed' */
 
     res.status(200).send({ success: true, data: { newReview } });
   } catch (err) {
@@ -26,4 +38,4 @@ const createReview = async (req, res) => {
   }
 };
 
-export default { getAllReviews, createReview };
+export default { getAllReviews, createReview, getReviewsFromUserByID };
