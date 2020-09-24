@@ -13,4 +13,4 @@ app.use('/api/reviews', reviewRoute);
 app.use('/api/users', userRoute);
 app.use('/api/contracts', contractRoute);
 
-app.listen(3000, () => console.log('Server is up and running!'));
+export default app;
