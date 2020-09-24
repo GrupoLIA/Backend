@@ -22,6 +22,12 @@ const userSchema = mongoose.Schema({
       review_count: { type: Number, default: 0 },
     },
   ],
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User,
+    },
+  ],
 });
 
 /*userSchema.methods.toJSON = function () {
