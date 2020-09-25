@@ -27,10 +27,9 @@ const userSchema = mongoose.Schema({
         type: String,
       },
     ],
-    validate: (val) => {
-      return val.length <= 3;
-    },
+    validate: [verifyTelephonesCount, '{PATH} exceeds the limit of 3'],
   },
+
   profile_description: {
     type: String,
   },
@@ -58,6 +57,10 @@ const userSchema = mongoose.Schema({
     },
   ],
 });
+
+function verifyTelephonesCount(val) {
+  return val.length <= 3;
+}
 
 userSchema.methods.toJSON = function () {
   const user = this;

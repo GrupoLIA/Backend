@@ -2,7 +2,7 @@ export default [
   {
     email: 'EMPLEADO_1',
     password: 'EMPLEADO_1',
-    telephones: ['2995244782', '29425263879'],
+    telephones: ['2995244782', '29425263879', '29425263879', '29425263879'],
   },
 
   {
