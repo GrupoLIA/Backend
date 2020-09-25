@@ -62,11 +62,26 @@ test('Should mark contract between users [0] and [2] as accepted', async () => {
     .expect(200);
 });
 
-/*test('Should create a review associated to the contract between users [0] and [2]', async () => {
+test('Should create a review associated to the contract between users [0] and [2]', async () => {
   await request(app)
-    .post('/api/users/signin')
+    .post(`/api/reviews/${contractID}`)
+    .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
     .send({
-      email: 'bad-email',
+      title: 'xd',
+      description: 'Best gasista in the world!!',
+      rating: 4,
+    })
+    .expect(200);
+});
+
+test('Should not create a review associated to the contract between users [0] and [2] because there is already one', async () => {
+  await request(app)
+    .post(`/api/reviews/${contractID}`)
+    .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
+    .send({
+      title: 'xd',
+      description: 'Best gasista in the world!!',
+      rating: 4,
     })
     .expect(400);
-});*/
+});

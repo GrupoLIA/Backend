@@ -51,15 +51,23 @@ const createReview = async (req, res) => {
       throw new Error('The contract need to be accepted in order to review it');
     }
 
+    if (contract.has_review) {
+      throw new Error('You have already reviewed this contract');
+    }
+
     const newReview = new Review({
       ...req.body,
       contract: req.params.contractID,
     });
+
     await newReview.save();
+
+    contract.has_review = true;
+    await contract.save();
 
     res.status(200).send({ success: true, data: { newReview } });
   } catch (err) {
-    res.status(501).send({ success: false, error: err.message });
+    res.status(400).send({ success: false, error: err.message });
   }
 };
 

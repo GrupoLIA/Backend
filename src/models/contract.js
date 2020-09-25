@@ -16,6 +16,10 @@ const contractSchema = mongoose.Schema({
     enum: ['pending', 'expired', 'accepted'],
     default: 'pending',
   },
+  has_review: {
+    type: Boolean,
+    default: false,
+  },
   trade: {
     type: String,
   },
