@@ -47,7 +47,6 @@ test('Should create a contract between users (employee)[0] and (employer)[2]', a
     .send({
       employee: usersData[0]._id,
       employer: usersData[2]._id,
-
       trade: 'gasista',
     })
     .expect(200);
