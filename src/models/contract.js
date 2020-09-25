@@ -13,7 +13,7 @@ const contractSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'expired', 'completed'],
+    enum: ['pending', 'expired', 'accepted'],
     default: 'pending',
   },
   trade: {

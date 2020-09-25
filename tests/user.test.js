@@ -1,10 +1,12 @@
 import request from 'supertest';
 import app from '../src/app';
+import Contract from '../src/models/contract';
 import User from '../src/models/user';
 import usersData from './usersTestData';
 
 beforeAll(async () => {
   await User.deleteMany();
+  await Contract.deleteMany();
   usersData.forEach(async (user) => {
     await new User(user).save();
   });
@@ -38,3 +40,33 @@ test('Should not signin a non existing user', async () => {
     })
     .expect(400);
 });
+
+test('Should create a contract between users (employee)[0] and (employer)[2]', async () => {
+  await request(app)
+    .post('/api/contracts')
+    .send({
+      employee: usersData[0]._id,
+      employer: usersData[2]._id,
+
+      trade: 'gasista',
+    })
+    .expect(200);
+});
+
+/*test('Should mark contract between users [0] and [2] as accepted', async () => {
+  await request(app)
+    .post('/api/users/signin')
+    .send({
+      email: 'bad-email',
+    })
+    .expect(400);
+});
+
+test('Should create a review associated to the contract between users [0] and [2]', async () => {
+  await request(app)
+    .post('/api/users/signin')
+    .send({
+      email: 'bad-email',
+    })
+    .expect(400);
+});*/
