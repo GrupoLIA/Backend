@@ -21,6 +21,16 @@ const userSchema = mongoose.Schema({
   location: {
     type: String,
   },
+  telephones: {
+    type: [
+      {
+        type: String,
+      },
+    ],
+    validate: (val) => {
+      return val.length <= 3;
+    },
+  },
   profile_description: {
     type: String,
   },
