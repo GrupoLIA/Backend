@@ -15,6 +15,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  img_source: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  profile_description: {
+    type: String,
+  },
   trades: [
     {
       trade: { type: String },

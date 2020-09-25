@@ -9,4 +9,20 @@ test('Should signup a new user', async () => {
       password: 'lpm',
     })
     .expect(201);
+
+  await request(app)
+    .post('/api/users')
+    .send({
+      email: 'chauaaa@taest',
+      password: 'lpm',
+    })
+    .expect(201);
+
+  await request(app)
+    .post('/api/users')
+    .send({
+      email: 'chauaaa@taest',
+      password: 'lpm',
+    })
+    .expect(201);
 });
