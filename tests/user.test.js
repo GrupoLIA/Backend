@@ -42,7 +42,7 @@ test('Should not signin a non existing user', async () => {
 });
 
 test('Should create a contract between users (employee)[0] and (employer)[2]', async () => {
-  const data = await request(app)
+  await request(app)
     .post('/api/contracts')
     .send({
       employee: usersData[0]._id,
@@ -50,7 +50,6 @@ test('Should create a contract between users (employee)[0] and (employer)[2]', a
       trade: 'gasista',
     })
     .expect(200);
-  console.log(data.req.res.client.res);
 });
 
 /*
