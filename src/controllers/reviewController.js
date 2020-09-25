@@ -1,3 +1,4 @@
+import Contract from '../models/contract';
 import Review from '../models/review';
 import User from '../models/user';
 
@@ -26,15 +27,34 @@ const getReviewsFromUserByID = async (req, res) => {
   } catch (err) {}
 };
 
+/*  
+/api/reviews/:contractID
+Only possible if the status of the contract the review references equals 'accepted'
+*/
+
 const createReview = async (req, res) => {
-  const newReview = new Review(req.body);
   try {
+    const contract = await Contract.findById({
+      _id: req.params.contractID,
+    });
+
+    if (!contract) {
+      throw new Error('Contract does not exists');
+    }
+
+    if (contract.status !== 'accepted') {
+      throw new Error('The contract need to be accepted in order to review it');
+    }
+
+    const newReview = new Review({
+      ...req.body,
+      contract: req.params.contractID,
+    });
     await newReview.save();
-    /*  Only possible if the status of the contract the review references equals 'completed' */
 
     res.status(200).send({ success: true, data: { newReview } });
   } catch (err) {
-    res.status(501).send({ success: false, error: err });
+    res.status(501).send({ success: false, error: err.message });
   }
 };
 
