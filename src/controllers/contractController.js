@@ -16,6 +16,7 @@ const getAllContracts = async (req, res) => {
   }
 };
 
+// To be done by the employer
 const createContract = async (req, res) => {
   try {
     const newContract = await Contract.create(req.body);
@@ -26,4 +27,24 @@ const createContract = async (req, res) => {
   }
 };
 
-export default { getAllContracts, createContract };
+// This can only be done by the employee
+const acceptContract = async (req, res) => {
+  try {
+    const contract = await Contract.findById({ _id: req.params.contractID });
+
+    if (contract.employee.toString() !== req.user._id.toString()) {
+      throw new Error('Only the employee can accept a contract');
+    }
+
+    contract.status = 'accepted';
+    await contract.save();
+
+    res.send({
+      success: true,
+    });
+  } catch (err) {
+    res.status(400).send({ success: false, error: err.message });
+  }
+};
+
+export default { getAllContracts, createContract, acceptContract };

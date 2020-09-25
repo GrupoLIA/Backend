@@ -42,7 +42,7 @@ test('Should not signin a non existing user', async () => {
 });
 
 test('Should create a contract between users (employee)[0] and (employer)[2]', async () => {
-  await request(app)
+  const data = await request(app)
     .post('/api/contracts')
     .send({
       employee: usersData[0]._id,
@@ -50,18 +50,18 @@ test('Should create a contract between users (employee)[0] and (employer)[2]', a
       trade: 'gasista',
     })
     .expect(200);
+  console.log(data.req.res.client.res);
 });
 
-/*test('Should mark contract between users [0] and [2] as accepted', async () => {
-  await request(app)
-    .post('/api/users/signin')
-    .send({
-      email: 'bad-email',
-    })
-    .expect(400);
-});
+/*
 
-test('Should create a review associated to the contract between users [0] and [2]', async () => {
+
+test('Should mark contract between users [0] and [2] as accepted', async () => {
+  await request(app).post(`/api/contracts/${}`).expect(400);
+});
+*/
+
+/*test('Should create a review associated to the contract between users [0] and [2]', async () => {
   await request(app)
     .post('/api/users/signin')
     .send({
