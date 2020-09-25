@@ -41,8 +41,10 @@ test('Should not signin a non existing user', async () => {
     .expect(400);
 });
 
+let contractID;
+
 test('Should create a contract between users (employee)[0] and (employer)[2]', async () => {
-  await request(app)
+  const response = await request(app)
     .post('/api/contracts')
     .send({
       employee: usersData[0]._id,
@@ -50,15 +52,15 @@ test('Should create a contract between users (employee)[0] and (employer)[2]', a
       trade: 'gasista',
     })
     .expect(200);
+  contractID = response.body.data.newContract._id;
 });
-
-/*
-
 
 test('Should mark contract between users [0] and [2] as accepted', async () => {
-  await request(app).post(`/api/contracts/${}`).expect(400);
+  await request(app)
+    .patch(`/api/contracts/${contractID}`)
+    .set('Authorization', `Bearer ${usersData[0].tokens[0].token}`)
+    .expect(200);
 });
-*/
 
 /*test('Should create a review associated to the contract between users [0] and [2]', async () => {
   await request(app)

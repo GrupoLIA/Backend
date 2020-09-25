@@ -28,6 +28,11 @@ const user2 = {
   _id: user2ID,
   email: 'EMPLEADO_2',
   password: 'EMPLEADO_2',
+  tokens: [
+    {
+      token: jwt.sign({ _id: user2ID }, 'hola'),
+    },
+  ],
 };
 
 const user3ID = new mongoose.Types.ObjectId();
@@ -35,6 +40,11 @@ const user3 = {
   _id: user3ID,
   email: 'USER_1',
   password: 'USER_1',
+  tokens: [
+    {
+      token: jwt.sign({ _id: user3ID }, 'hola'),
+    },
+  ],
 };
 
 const user4ID = new mongoose.Types.ObjectId();
@@ -42,6 +52,11 @@ const user4 = {
   _id: user4ID,
   email: 'USER_2',
   password: 'USER_2',
+  tokens: [
+    {
+      token: jwt.sign({ _id: user4ID }, 'hola'),
+    },
+  ],
 };
 
 export default [user1, user2, user3, user4];
