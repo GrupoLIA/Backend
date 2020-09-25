@@ -29,7 +29,8 @@ const getReviewsFromUserByID = async (req, res) => {
 
 /*  
 /api/reviews/:contractID
-Only possible if the status of the contract the review references equals 'accepted'
+Only possible if the status of the contract the review references equals 'accepted' and
+the user making the review is the employer as in the contract
 */
 
 const createReview = async (req, res) => {
@@ -40,6 +41,10 @@ const createReview = async (req, res) => {
 
     if (!contract) {
       throw new Error('Contract does not exists');
+    }
+
+    if (contract.employer.toString() !== req.user._id.toString()) {
+      throw new Error('Only the employer can make a review');
     }
 
     if (contract.status !== 'accepted') {
