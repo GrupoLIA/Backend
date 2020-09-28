@@ -2,11 +2,13 @@ import request from 'supertest';
 import app from '../src/app';
 import Contract from '../src/models/contract';
 import User from '../src/models/user';
+import Review from '../src/models/review';
 import usersData from './usersTestData';
 
 beforeAll(async () => {
   await User.deleteMany();
   await Contract.deleteMany();
+  await Review.deleteMany();
   usersData.forEach(async (user) => {
     await new User(user).save();
   });
@@ -62,7 +64,7 @@ test('Should mark contract between users [0] and [2] as accepted', async () => {
     .expect(200);
 });
 
-test('Should create a review associated to the contract between users [0] and [2]', async () => {
+/*test('Should create a review associated to the contract between users [0] and [2]', async () => {
   await request(app)
     .post(`/api/reviews/${contractID}`)
     .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
@@ -73,10 +75,23 @@ test('Should create a review associated to the contract between users [0] and [2
     })
     .expect(200);
 });
+*/
+
+test('Should create a review associated to the contract between users [0] and [2]', async () => {
+  await request(app)
+    .post(`/api/contracts/${contractID}/reviews`)
+    .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
+    .send({
+      title: 'xd',
+      description: 'Best gasista in the worldsadasd!!',
+      rating: 4,
+    })
+    .expect(200);
+});
 
 test('Should not create a review associated to the contract between users [0] and [2] because there is already one', async () => {
   await request(app)
-    .post(`/api/reviews/${contractID}`)
+    .post(`/api/contracts/${contractID}/reviews`)
     .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
     .send({
       title: 'xd',
