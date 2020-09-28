@@ -29,6 +29,12 @@ const contractSchema = mongoose.Schema({
   },
 });
 
+contractSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'contract',
+});
+
 const Contract = mongoose.model('Contract', contractSchema);
 
 export default Contract;

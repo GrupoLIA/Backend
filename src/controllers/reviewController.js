@@ -4,17 +4,46 @@ import User from '../models/user';
 
 const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find({});
+    if (!req.params.userID) {
+      const reviews = await Review.find();
 
-    res.status(200).send({
-      success: 'true',
-      length: reviews.length,
-      data: {
+      res.status(200).send({
+        success: 'true',
+        length: reviews.length,
+        data: {
+          reviews,
+        },
+      });
+    } else {
+      const contracts = await Contract.find({
+        employee: req.params.userID,
+        status: 'accepted',
+        has_review: true,
+      });
+
+      console.log('Contracts:', contracts);
+
+      const aux = await Promise.all(
+        contracts.map(async (value) => {
+          return await value.populate('reviews').execPopulate();
+        })
+      );
+
+      console.log('aux', aux);
+
+      const reviews = aux.map((value) => {
+        return value.reviews;
+      });
+
+      console.log(reviews);
+      res.status(200).send({
+        success: 'true',
+        length: reviews.length,
         reviews,
-      },
-    });
+      });
+    }
   } catch (err) {
-    res.status(404).send({ success: false });
+    res.status(404).send({ success: false, error: err.message });
   }
 };
 
