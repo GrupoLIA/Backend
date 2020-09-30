@@ -1,7 +1,7 @@
 # Backend
 
-Para información detallada del proyecto dirigirse a [Informe]
+Para información detallada del proyecto dirigirse a [Aplicacion para Oficios]
 
 
 
-[Informe] https://www.overleaf.com/project/5f46b246abe9bf0001dce417
+[Aplicacion para Oficios]: https://www.overleaf.com/project/5f46b246abe9bf0001dce417
