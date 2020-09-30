@@ -1,6 +1,6 @@
 # Backend
 
-Para información detallada del proyecto dirigirse a [Aplicacion para Oficios]
+Para información detallada sobre el proyecto dirigirse a [Aplicacion para Oficios]
 
 
 
