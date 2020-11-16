@@ -35,7 +35,7 @@ const getAllReviews = async (req, res) => {
         return value.reviews;
       });
 
-      console.log(reviews);
+      console.log('REVIEWS', reviews);
       res.status(200).send({
         success: 'true',
         length: reviews.length,

@@ -41,4 +41,23 @@ const signIn = async (req, res) => {
   }
 };
 
-export default { getAllUsers, signIn, signUp };
+const readProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    res.send({ success: true, data: { user } });
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
+  }
+};
+
+export default { getAllUsers, signIn, signUp, readProfile, logout };
