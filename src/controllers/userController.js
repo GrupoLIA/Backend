@@ -1,15 +1,27 @@
 import User from '../models/user';
 
+//GET  /api/users?email=EMPLEADO_1&trade=gasista
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const emailFilter = req.query.email ? req.query.email : '';
+
+    let users;
+
+    if (req.query.trade) {
+      users = await User.find({
+        email: { $ne: emailFilter },
+        'trades.trade': req.query.trade,
+      });
+    } else {
+      users = await User.find({
+        email: { $ne: emailFilter },
+      });
+    }
 
     res.status(200).send({
       success: 'true',
       length: users.length,
-      data: {
-        users,
-      },
+      data: users,
     });
   } catch (err) {
     res.status(404).send({ success: false });
