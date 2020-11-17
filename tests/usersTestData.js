@@ -59,4 +59,26 @@ const user4 = {
   ],
 };
 
-export default [user1, user2, user3, user4];
+const user5ID = new mongoose.Types.ObjectId();
+const user5 = {
+  _id: user5ID,
+  email: 'EMPLEADO_3',
+  password: 'EMPLEADO_3',
+  telephones: ['2995175320'],
+  trades: [
+    {
+      trade: 'plomero',
+      validation_date: Date.now(),
+      expiracy_date: Date.now(),
+      total_rating: 1,
+      review_count: 1,
+    },
+  ],
+  tokens: [
+    {
+      token: jwt.sign({ _id: user5ID }, 'hola'),
+    },
+  ],
+};
+
+export default [user1, user2, user3, user4, user5];

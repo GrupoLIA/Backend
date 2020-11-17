@@ -64,6 +64,70 @@ test('Should mark contract between users [0] and [2] as accepted', async () => {
     .expect(200);
 });
 
+test('Should signin an existing user', async () => {
+  await request(app)
+    .post('/api/users/signin')
+    .send({
+      email: usersData[4].email,
+      password: usersData[4].password,
+    })
+    .expect(200);
+});
+
+let contractID42;
+
+test('Should create a contract between users (employee)[4] and (employer)[2]', async () => {
+  const response = await request(app)
+    .post('/api/contracts')
+    .send({
+      employee: usersData[4]._id,
+      employer: usersData[2]._id,
+      trade: 'plomero',
+    })
+    .expect(200);
+  contractID42 = response.body.data.newContract._id;
+});
+
+test('Should mark contract between users [4] and [2] as accepted', async () => {
+  await request(app)
+    .patch(`/api/contracts/${contractID42}`)
+    .set('Authorization', `Bearer ${usersData[4].tokens[0].token}`)
+    .expect(200);
+});
+
+test('Should create a review associated to the contract between users [4] and [2]', async () => {
+  await request(app)
+    .post(`/api/contracts/${contractID42}/reviews`)
+    .set('Authorization', `Bearer ${usersData[2].tokens[0].token}`)
+    .send({
+      title: 'Recomendado',
+      description: 'Realizo un excelente trabajo, lo recomiendo.',
+      rating: 5,
+    })
+    .expect(200);
+});
+
+let contractID04;
+
+test('Should create a contract between users (employee)[0] and (employer)[4]', async () => {
+  const response = await request(app)
+    .post('/api/contracts')
+    .send({
+      employee: usersData[0]._id,
+      employer: usersData[4]._id,
+      trade: 'gasista',
+    })
+    .expect(200);
+  contractID04 = response.body.data.newContract._id;
+});
+
+test('Should mark contract between users [0] and [4] as accepted', async () => {
+  await request(app)
+    .patch(`/api/contracts/${contractID04}`)
+    .set('Authorization', `Bearer ${usersData[0].tokens[0].token}`)
+    .expect(200);
+});
+
 /*test('Should create a review associated to the contract between users [0] and [2]', async () => {
   await request(app)
     .post(`/api/reviews/${contractID}`)
@@ -85,6 +149,18 @@ test('Should create a review associated to the contract between users [0] and [2
       title: 'xd',
       description: 'Best gasista in the worldsadasd!!',
       rating: 4,
+    })
+    .expect(200);
+});
+
+test('Should create a review associated to the contract between users [0] and [4]', async () => {
+  await request(app)
+    .post(`/api/contracts/${contractID04}/reviews`)
+    .set('Authorization', `Bearer ${usersData[4].tokens[0].token}`)
+    .send({
+      title: 'Normal',
+      description: 'Sin destacarse',
+      rating: 1,
     })
     .expect(200);
 });
