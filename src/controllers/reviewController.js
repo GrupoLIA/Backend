@@ -31,9 +31,7 @@ const getAllReviews = async (req, res) => {
 
       console.log('aux', aux);
 
-      const reviews = aux.map((value) => {
-        return value.reviews;
-      });
+      const reviews = aux.flatMap((value) => value.reviews);
 
       console.log('REVIEWS', reviews);
       res.status(200).send({
