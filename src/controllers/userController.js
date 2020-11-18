@@ -1,6 +1,6 @@
 import User from '../models/user';
 
-//GET  /api/users?email=EMPLEADO_1&trade=gasista
+//GET  /api/users?email=EMPLEADO_1&trade=gasista&skip=1&limit=7
 const getAllUsers = async (req, res) => {
   try {
     const emailFilter = req.query.email ? req.query.email : '';
@@ -11,11 +11,15 @@ const getAllUsers = async (req, res) => {
       users = await User.find({
         email: { $ne: emailFilter },
         'trades.trade': req.query.trade,
-      });
+      })
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip));
     } else {
       users = await User.find({
         email: { $ne: emailFilter },
-      });
+      })
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip));
     }
 
     res.status(200).send({
