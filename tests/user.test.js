@@ -4,12 +4,16 @@ import Contract from '../src/models/contract';
 import User from '../src/models/user';
 import Review from '../src/models/review';
 import usersData from './usersTestData';
+import MOCK_DATA from './MOCK_DATA';
 
 beforeAll(async () => {
   await User.deleteMany();
   await Contract.deleteMany();
   await Review.deleteMany();
   usersData.forEach(async (user) => {
+    await new User(user).save();
+  });
+  MOCK_DATA.forEach(async (user) => {
     await new User(user).save();
   });
 });
