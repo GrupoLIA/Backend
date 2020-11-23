@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  img_source: {
+  avatar: {
     type: String,
   },
   location: {

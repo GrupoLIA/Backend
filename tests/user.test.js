@@ -13,6 +13,9 @@ beforeAll(async () => {
   usersData.forEach(async (user) => {
     await new User(user).save();
   });
+});
+
+afterAll(async () => {
   MOCK_DATA.forEach(async (user) => {
     await new User(user).save();
   });

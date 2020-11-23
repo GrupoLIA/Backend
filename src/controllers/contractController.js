@@ -2,7 +2,7 @@ import Contract from '../models/contract';
 
 const getAllContracts = async (req, res) => {
   try {
-    const contracts = await Contract.find({});
+    const contracts = await Contract.find({ employee: { $eq: req.user._id } });
 
     res.status(200).send({
       success: 'true',
@@ -19,7 +19,10 @@ const getAllContracts = async (req, res) => {
 // To be done by the employer
 const createContract = async (req, res) => {
   try {
-    const newContract = await Contract.create(req.body);
+    const newContract = await Contract.create({
+      ...req.body,
+      employer: req.user._id,
+    });
 
     res.status(200).send({ success: true, data: { newContract } });
   } catch (err) {

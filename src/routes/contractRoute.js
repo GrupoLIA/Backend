@@ -8,8 +8,8 @@ const router = new Router();
 
 router
   .route('/')
-  .get(contractController.getAllContracts)
-  .post(contractController.createContract);
+  .get(auth, contractController.getAllContracts)
+  .post(auth, contractController.createContract);
 
 router.route('/:contractID').patch(auth, contractController.acceptContract);
 
