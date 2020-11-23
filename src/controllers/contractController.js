@@ -2,7 +2,13 @@ import Contract from '../models/contract';
 
 const getAllContracts = async (req, res) => {
   try {
-    const contracts = await Contract.find({ employee: { $eq: req.user._id } });
+    let contracts;
+
+    if (req.query.isEmployee) {
+      contracts = await Contract.find({ employee: { $eq: req.user._id } });
+    } else {
+      contracts = await Contract.find({ employer: { $eq: req.user._id } });
+    }
 
     res.status(200).send({
       success: 'true',

@@ -5,6 +5,7 @@ import User from '../models/user';
 const getAllReviews = async (req, res) => {
   try {
     if (!req.params.userID) {
+      // Deberia tirar una exception y cortar acá en esta linea
       const reviews = await Review.find();
 
       res.status(200).send({
