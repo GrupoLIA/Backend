@@ -25,6 +25,24 @@ const getAllContracts = async (req, res) => {
 // To be done by the employer
 const createContract = async (req, res) => {
   try {
+    const createdContracts = await Contract.countDocuments({
+      $and: [
+        {
+          employer: req.body.employer,
+        },
+        {
+          employee: req.body.employee,
+        },
+        {
+          status: 'pending',
+        },
+      ],
+    }).exec();
+
+    if (createdContracts >= 1) {
+      throw new Error('Contract is already pending');
+    }
+
     const newContract = await Contract.create({
       ...req.body,
       employer: req.user._id,
@@ -32,7 +50,7 @@ const createContract = async (req, res) => {
 
     res.status(200).send({ success: true, data: { newContract } });
   } catch (err) {
-    res.status(501).send({ success: false, error: err });
+    res.status(501).send({ success: false, error: err.toString() });
   }
 };
 
