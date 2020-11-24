@@ -73,9 +73,9 @@ const createReview = async (req, res) => {
       throw new Error('Only the employer can make a review');
     }
 
-    //if (contract.status !== 'accepted') {
-    //  throw new Error('The contract need to be accepted in order to review it');
-    //}
+    if (contract.status !== 'accepted') {
+      throw new Error('The contract need to be accepted in order to review it');
+    }
 
     if (contract.has_review) {
       throw new Error('You have already reviewed this contract');
@@ -92,6 +92,25 @@ const createReview = async (req, res) => {
     await contract.save();
 
     const employee = await User.findById(contract.employee);
+    const findTrade = employee.trades.find((t) => t.trade === contract.trade);
+
+    const reviewCount = findTrade.review_count;
+    const totalRating = findTrade.total_rating;
+
+    User.findOneAndUpdate(
+      {
+        _id: contract.employee,
+        'trades.trade': contract.trade,
+      },
+      {
+        $set: {
+          'trades.$.review_count': reviewCount + 1,
+          'trades.$.total_rating':
+            (totalRating * reviewCount + req.body.rating) / (reviewCount + 1),
+        },
+      },
+      { new: true }
+    ).exec();
 
     res.status(200).send({ success: true, data: { newReview } });
   } catch (err) {
