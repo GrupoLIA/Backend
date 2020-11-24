@@ -28,7 +28,7 @@ const createContract = async (req, res) => {
     const createdContracts = await Contract.countDocuments({
       $and: [
         {
-          employer: req.body.employer,
+          employer: req.user._id,
         },
         {
           employee: req.body.employee,

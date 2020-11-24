@@ -63,9 +63,7 @@ the user making the review is the employer as in the contract
 
 const createReview = async (req, res) => {
   try {
-    const contract = await Contract.findById({
-      _id: req.params.contractID,
-    });
+    const contract = await Contract.findById(req.params.contractID);
 
     if (!contract) {
       throw new Error('Contract does not exists');
@@ -75,9 +73,9 @@ const createReview = async (req, res) => {
       throw new Error('Only the employer can make a review');
     }
 
-    if (contract.status !== 'accepted') {
-      throw new Error('The contract need to be accepted in order to review it');
-    }
+    //if (contract.status !== 'accepted') {
+    //  throw new Error('The contract need to be accepted in order to review it');
+    //}
 
     if (contract.has_review) {
       throw new Error('You have already reviewed this contract');
@@ -92,6 +90,8 @@ const createReview = async (req, res) => {
 
     contract.has_review = true;
     await contract.save();
+
+    const employee = await User.findById(contract.employee);
 
     res.status(200).send({ success: true, data: { newReview } });
   } catch (err) {
