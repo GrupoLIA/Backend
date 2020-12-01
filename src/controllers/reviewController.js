@@ -73,8 +73,8 @@ const createReview = async (req, res) => {
       throw new Error('Only the employer can make a review');
     }
 
-    if (contract.status !== 'accepted') {
-      throw new Error('The contract need to be accepted in order to review it');
+    if (contract.status !== 'finished') {
+      throw new Error('The contract need to be finished in order to review it');
     }
 
     if (contract.has_review) {
