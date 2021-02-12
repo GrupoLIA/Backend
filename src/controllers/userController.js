@@ -21,11 +21,15 @@ const getAllUsers = async (req, res) => {
         .limit(parseInt(req.query.limit))
         .skip(parseInt(req.query.skip));
     }
-
+    
+    res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+    res.set('X-Total-Count', users.length)
     res.status(200).send({
+     
       success: 'true',
-      length: users.length,
+     
       data: users,
+      total: users.length,
     });
   } catch (err) {
     res.status(404).send({ success: false });
@@ -76,4 +80,24 @@ const logout = async (req, res) => {
   }
 };
 
-export default { getAllUsers, signIn, signUp, readProfile, logout };
+
+const adminUpdateUser = async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['name', 'email', 'password', 'trades'];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' });
+  }
+  try {
+    const user = await User.findById(req.params.id);
+    updates.forEach((update) => (user[update] = req.body[update]));
+    await user.save();
+    res.send(user);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+export default { getAllUsers, signIn, signUp, readProfile, logout, adminUpdateUser };

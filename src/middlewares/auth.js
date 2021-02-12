@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 
-const auth = async (req, res, next) => {
+const auth = (isAdmin) => async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, 'hola');
+    
     const user = await User.findOne({
       _id: decoded._id,
       'tokens.token': token,
+       role: isAdmin ? "admin" : "user",
     });
 
     if (!user) {

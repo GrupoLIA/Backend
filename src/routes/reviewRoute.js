@@ -6,7 +6,7 @@ import auth from '../middlewares/auth';
 
 const router = new Router();
 
-router.route('/').get(auth, reviewController.getAllReviews);
-router.route('/:contractID').post(auth, reviewController.createReview);
+router.route('/').get(auth(false), reviewController.getAllReviews);
+router.route('/:contractID').post(auth(false), reviewController.createReview);
 
 export default router;

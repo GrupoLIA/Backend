@@ -10,7 +10,7 @@
     "build-test": "babel ./src -d dist-test/",
     "start-test": "npm run build-test && node dist-test/index.js",
     "watch-test": "env-cmd -f test.env nodemon --watch ./src --exec npm run start-test",
-    "test": "env-cmd -f test.env jest --watch"
+    "test": "env-cmd -f .env jest --watch"
   },
   "jest": {
     "testEnvironment": "node"
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.5"

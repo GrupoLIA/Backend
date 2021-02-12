@@ -30,6 +30,12 @@ const userSchema = mongoose.Schema({
     validate: [verifyTelephonesCount, '{PATH} exceeds the limit of 3'],
   },
 
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
+
   profile_description: {
     type: String,
   },
@@ -37,7 +43,7 @@ const userSchema = mongoose.Schema({
     {
       trade: { type: String },
       validation_date: { type: Date, default: Date.now },
-      expiracy_date: { type: Date },
+      expiracy_date: { type: Date},
       total_rating: { type: Number, default: 0 },
       review_count: { type: Number, default: 0 },
     },
@@ -61,6 +67,9 @@ const userSchema = mongoose.Schema({
 function verifyTelephonesCount(val) {
   return val.length <= 3;
 }
+
+
+
 
 userSchema.methods.toJSON = function () {
   const user = this;
@@ -107,6 +116,20 @@ userSchema.pre('save', async function (next) {
   }
 
   next();
+});
+
+// Duplicate the ID field.
+userSchema.virtual('id').get(function(){
+  return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+userSchema.set('toJSON', {
+  virtuals: true
+});
+
+userSchema.set('toObject', {
+  virtuals: true
 });
 
 const User = mongoose.model('User', userSchema);

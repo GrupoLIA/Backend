@@ -11,6 +11,10 @@ const contractSchema = mongoose.Schema({
     ref: 'User',
     required: [true, 'A contract must be directed to a user.'],
   },
+  description: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     enum: ['pending', 'expired', 'accepted', 'finished'],

@@ -8,11 +8,11 @@ const router = new Router();
 
 router
   .route('/')
-  .get(auth, contractController.getAllContracts)
-  .post(auth, contractController.createContract);
+  .get(auth(false), contractController.getAllContracts)
+  .post(auth(false), contractController.createContract);
 
-router.route('/:contractID').patch(auth, contractController.acceptContract);
+router.route('/:contractID').patch(auth(false), contractController.acceptContract);
 
-router.route('/:contractID/reviews').post(auth, reviewController.createReview);
+router.route('/:contractID/reviews').post(auth(false), reviewController.createReview);
 
 export default router;

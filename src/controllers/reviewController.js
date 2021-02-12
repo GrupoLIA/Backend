@@ -3,6 +3,7 @@ import Review from '../models/review';
 import User from '../models/user';
 
 const getAllReviews = async (req, res) => {
+  // not implemented on frontend
   try {
     if (!req.params.userID) {
       // Deberia tirar una exception y cortar acá en esta linea
