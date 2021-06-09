@@ -21,13 +21,12 @@ const getAllUsers = async (req, res) => {
         .limit(parseInt(req.query.limit))
         .skip(parseInt(req.query.skip));
     }
-    
-    res.header('Access-Control-Expose-Headers', 'X-Total-Count')
-    res.set('X-Total-Count', users.length)
+
+    res.header('Access-Control-Expose-Headers', 'X-Total-Count');
+    res.set('X-Total-Count', users.length);
+
     res.status(200).send({
-     
       success: 'true',
-     
       data: users,
       total: users.length,
     });
@@ -70,6 +69,7 @@ const readProfile = async (req, res) => {
   }
 };
 
+// remove all user tokens
 const logout = async (req, res) => {
   try {
     req.user.tokens = [];
@@ -80,6 +80,19 @@ const logout = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.userID);
+
+    if (!user) {
+      return res.status(404).send();
+    }
+
+    res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
+};
 
 const adminUpdateUser = async (req, res) => {
   const updates = Object.keys(req.body);
@@ -100,4 +113,12 @@ const adminUpdateUser = async (req, res) => {
   }
 };
 
-export default { getAllUsers, signIn, signUp, readProfile, logout, adminUpdateUser };
+export default {
+  getAllUsers,
+  signIn,
+  signUp,
+  readProfile,
+  logout,
+  deleteUser,
+  adminUpdateUser,
+};

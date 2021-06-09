@@ -23,19 +23,14 @@ const getAllReviews = async (req, res) => {
         has_review: true,
       });
 
-      console.log('Contracts:', contracts);
-
       const aux = await Promise.all(
         contracts.map(async (value) => {
           return await value.populate('reviews').execPopulate();
         })
       );
 
-      console.log('aux', aux);
-
       const reviews = aux.flatMap((value) => value.reviews);
 
-      console.log('REVIEWS', reviews);
       res.status(200).send({
         success: 'true',
         length: reviews.length,
@@ -95,7 +90,7 @@ const createReview = async (req, res) => {
     const employee = await User.findById(contract.employee);
     const findTrade = employee.trades.find((t) => t.trade === contract.trade);
 
-    const reviewCount = findTrade.review_count;
+    const reviewCount = findTrade.review_count ?? 0;
     const totalRating = findTrade.total_rating;
 
     User.findOneAndUpdate(

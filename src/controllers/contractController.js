@@ -1,4 +1,5 @@
 import Contract from '../models/contract';
+import User from '../models/user';
 
 const getAllContracts = async (req, res) => {
   try {
@@ -25,6 +26,12 @@ const getAllContracts = async (req, res) => {
 // To be done by the employer
 const createContract = async (req, res) => {
   try {
+    const employee = await User.findById({ _id: req.body.employee });
+
+    if (!employee) {
+      throw new Error('Employee must exist');
+    }
+
     const createdContracts = await Contract.countDocuments({
       $and: [
         {
@@ -43,6 +50,22 @@ const createContract = async (req, res) => {
       throw new Error('Contract is already pending');
     }
 
+    const userIndexTrade = employee.trades.findIndex(
+      (t) => t.trade === req.body.trade
+    );
+
+    if (userIndexTrade == -1) {
+      throw new Error('Employee does not have that trade');
+    }
+
+    // Check expiration of the trade
+    const expiredTrade = await employee.hasTradeExpired(req.body.trade);
+
+    if (expiredTrade) {
+      // commented for debugging
+      // throw new Error('Employee has expired trade');
+    }
+
     const newContract = await Contract.create({
       ...req.body,
       employer: req.user._id,
@@ -50,7 +73,7 @@ const createContract = async (req, res) => {
 
     res.status(200).send({ success: true, data: { newContract } });
   } catch (err) {
-    res.status(501).send({ success: false, error: err.toString() });
+    res.status(501).send({ success: false, error: err.message });
   }
 };
 

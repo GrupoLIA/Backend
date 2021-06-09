@@ -1,12 +1,10 @@
 import { Router } from 'express';
-
 import reviewController from '../controllers/reviewController';
-
-import auth from '../middlewares/auth';
+import auth from '../middlewares/authentication';
 
 const router = new Router();
 
-router.route('/').get(auth(false), reviewController.getAllReviews);
-router.route('/:contractID').post(auth(false), reviewController.createReview);
+router.route('/').get(auth, reviewController.getAllReviews);
+router.route('/:contractID').post(auth, reviewController.createReview);
 
 export default router;

@@ -26,7 +26,10 @@ const reviewSchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
 reviewSchema.methods.toJSON = function () {

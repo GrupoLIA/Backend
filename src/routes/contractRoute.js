@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import auth from '../middlewares/auth';
+import auth from '../middlewares/authentication';
+import permit from '../middlewares/authorization';
 
 import contractController from '../controllers/contractController';
 import reviewController from '../controllers/reviewController';
@@ -8,11 +9,11 @@ const router = new Router();
 
 router
   .route('/')
-  .get(auth(false), contractController.getAllContracts)
-  .post(auth(false), contractController.createContract);
+  .get(auth, permit('user', 'admin'), contractController.getAllContracts)
+  .post(auth, contractController.createContract);
 
-router.route('/:contractID').patch(auth(false), contractController.acceptContract);
+router.route('/:contractID').patch(auth, contractController.acceptContract);
 
-router.route('/:contractID/reviews').post(auth(false), reviewController.createReview);
+router.route('/:contractID/reviews').post(auth, reviewController.createReview);
 
 export default router;
