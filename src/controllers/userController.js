@@ -14,12 +14,14 @@ const getAllUsers = async (req, res) => {
       })
         .limit(parseInt(req.query.limit))
         .skip(parseInt(req.query.skip));
+      //.populate('favorites');
     } else {
       users = await User.find({
         email: { $ne: emailFilter },
       })
         .limit(parseInt(req.query.limit))
         .skip(parseInt(req.query.skip));
+      //.populate('favorites');
     }
 
     res.header('Access-Control-Expose-Headers', 'X-Total-Count');

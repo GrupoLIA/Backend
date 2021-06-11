@@ -59,11 +59,11 @@ const createContract = async (req, res) => {
     }
 
     // Check expiration of the trade
-    const expiredTrade = await employee.hasTradeExpired(req.body.trade);
+    const expiredTrade = employee.hasTradeExpired(req.body.trade);
 
     if (expiredTrade) {
       // commented for debugging
-      // throw new Error('Employee has expired trade');
+      throw new Error('Employee has expired trade');
     }
 
     const newContract = await Contract.create({

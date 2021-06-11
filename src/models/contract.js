@@ -39,6 +39,16 @@ contractSchema.virtual('reviews', {
   foreignField: 'contract',
 });
 
+// Hide sensitive information in JSON responses.
+contractSchema.methods.toJSON = function () {
+  const contract = this;
+  const contractObject = contract.toObject();
+
+  delete contractObject.__v;
+
+  return contractObject;
+};
+
 const Contract = mongoose.model('Contract', contractSchema);
 
 export default Contract;

@@ -7,6 +7,8 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      trim: true,
+      lowercase: true,
       required: [true, 'A valid email must be specified.'],
     },
     password: {
@@ -76,13 +78,14 @@ userSchema.methods.toJSON = function () {
 
   delete userObject.password;
   delete userObject.tokens;
+  delete userObject.__v;
 
   return userObject;
 };
 
-userSchema.methods.hasTradeExpired = async function (aTrade) {
+userSchema.methods.hasTradeExpired = function (trade) {
   const user = this;
-  const tradeIndex = user.trades.findIndex((t) => t.trade == aTrade);
+  const tradeIndex = user.trades.findIndex((t) => t.trade == trade);
 
   if (
     new Date(user.trades[tradeIndex].expiracy_date).toISOString() >

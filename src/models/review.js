@@ -37,6 +37,7 @@ reviewSchema.methods.toJSON = function () {
   const reviewObject = review.toObject();
 
   delete reviewObject._id;
+  delete reviewObject.__v;
 
   return reviewObject;
 };
