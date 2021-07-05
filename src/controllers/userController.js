@@ -65,6 +65,7 @@ const signIn = async (req, res) => {
 const readProfile = async (req, res) => {
   try {
     const user = req.user;
+
     res.send({ success: true, data: { user } });
   } catch (err) {
     res.status(400).send(err.message);
@@ -96,25 +97,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const adminUpdateUser = async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'email', 'password', 'trades'];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-  if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' });
-  }
-  try {
-    const user = await User.findById(req.params.id);
-    updates.forEach((update) => (user[update] = req.body[update]));
-    await user.save();
-    res.send(user);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-};
-
 export default {
   getAllUsers,
   signIn,
@@ -122,5 +104,4 @@ export default {
   readProfile,
   logout,
   deleteUser,
-  adminUpdateUser,
 };

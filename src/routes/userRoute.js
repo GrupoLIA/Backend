@@ -13,6 +13,4 @@ router.route('/logout').post(auth, userController.logout);
 router.route('/:userID/reviews').get(reviewController.getAllReviews);
 router.route('/:userID').delete(auth, userController.deleteUser);
 
-router.route('/admin/update/:id').patch(auth, userController.adminUpdateUser);
-
 export default router;

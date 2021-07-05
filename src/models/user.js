@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import validator from 'validator';
 
 const userSchema = mongoose.Schema(
   {
@@ -10,6 +11,11 @@ const userSchema = mongoose.Schema(
       trim: true,
       lowercase: true,
       required: [true, 'A valid email must be specified.'],
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('Email is invalid');
+        }
+      },
     },
     password: {
       type: String,
@@ -76,9 +82,11 @@ userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
 
-  delete userObject.password;
-  delete userObject.tokens;
-  delete userObject.__v;
+  if (user.role !== 'admin') {
+    delete userObject.password;
+    delete userObject.tokens;
+    delete userObject.__v;
+  }
 
   return userObject;
 };
@@ -100,7 +108,10 @@ userSchema.methods.hasTradeExpired = function (trade) {
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const secretKey = process.env.SECRETKEY || 'hola';
-  const token = jwt.sign({ _id: user._id.toString() }, secretKey);
+  const token = jwt.sign(
+    { _id: user._id.toString(), role: user.role },
+    secretKey
+  );
 
   user.tokens = user.tokens.concat({ token });
   await user.save();
