@@ -1,4 +1,4 @@
-const permit = (...permittedRoles) => {
+const allow = (...permittedRoles) => {
   return (req, res, next) => {
     if (permittedRoles.includes(req.user.role)) {
       next();
@@ -8,4 +8,4 @@ const permit = (...permittedRoles) => {
   };
 };
 
-export default permit;
+export default allow;
