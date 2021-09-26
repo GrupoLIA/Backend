@@ -145,21 +145,11 @@ const login = async (req, res) => {
   try {
     const user = await User.findByCredentials(data.email, data.password);
 
-    if (!user) {
-      return res.status(404).send({
-        error: {
-          code: 101,
-          message: 'User not found',
-          description: 'The user was not found in the database.',
-        },
-      });
-    }
-
     if (user.role !== 'admin') {
       // The server generating a 401 response MUST send a WWW-Authenticate header field. See RFC7235 - Sec 4.1
       res.set('WWW-Authenticate', 'Bearer');
 
-      res.status(401).send({
+      return res.status(401).send({
         error: {
           code: 103,
           message: 'Forbidden access',
@@ -173,7 +163,7 @@ const login = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       error: {
-        message: 'Internal server error',
+        message: err,
       },
     });
   }
