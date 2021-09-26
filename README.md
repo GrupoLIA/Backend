@@ -1,7 +1,7 @@
 # Backend
 
-Para información detallada sobre el proyecto dirigirse a [Aplicacion para Oficios]
+Para información detallada sobre el proyecto dirigirse a [Aplicacion para Oficios].
 
+En desarrollo ejecutar `npm run watch`.
 
-
-[Aplicacion para Oficios]: https://www.overleaf.com/project/5f46b246abe9bf0001dce417
+[aplicacion para oficios]: https://www.overleaf.com/project/5f46b246abe9bf0001dce417
