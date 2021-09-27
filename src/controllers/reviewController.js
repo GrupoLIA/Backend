@@ -6,7 +6,7 @@ const getAllReviews = async (req, res) => {
   try {
     const contracts = await Contract.find({
       employee: req.user._id,
-      status: 'accepted',
+      status: 'finished',
       has_review: true,
     });
 
