@@ -1,15 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "todo",
+  "description": "Aplicacion de Oficios",
   "main": "index.js",
   "scripts": {
     "build": "babel ./src -d dist/",
-    "start": "npm run build && node dist/index.js",
-    "watch": "env-cmd -f .env nodemon --watch ./src --exec npm run start",
+    "start": "npm run build && env-cmd -f .env node dist/index.js",
+    "watch": "nodemon --watch ./src --exec npm run start",
     "build-test": "babel ./src -d dist-test/",
-    "start-test": "npm run build-test && node dist-test/index.js",
-    "watch-test": "env-cmd -f test.env nodemon --watch ./src --exec npm run start-test",
+    "start-test": "env-cmd -f test.env npm run build-test && node dist-test/index.js",
+    "watch-test": "nodemon --watch ./src --exec npm run start-test",
     "test": "env-cmd -f .env jest --watch"
   },
   "jest": {
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/GrupoLIA/Backend.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Grupo LIA",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GrupoLIA/Backend/issues"
