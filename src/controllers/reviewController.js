@@ -5,7 +5,7 @@ import User from '../models/user';
 const getAllReviews = async (req, res) => {
   try {
     const contracts = await Contract.find({
-      employee: req.params.userID,
+      employee: req.user._id,
       status: 'accepted',
       has_review: true,
     });
