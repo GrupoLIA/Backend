@@ -1,5 +1,6 @@
 import { isValidObjectId } from 'mongoose';
 import User from '../models/user';
+import Contract from '../models/contract';
 
 const getUser = async (req, res) => {
   const user_id = req.params.id;
@@ -169,9 +170,42 @@ const login = async (req, res) => {
   }
 };
 
+const getAllContracts = async (req, res) => {
+  try {
+    await Contract.find()
+      .populate([
+        { path: 'employer', select: 'email' },
+        { path: 'employee', select: 'email' },
+      ])
+      .lean()
+      .exec(function (err, data) {
+        data.forEach((contract) => {
+          const tmpEmployer = contract.employer.email;
+          const tmpEmployee = contract.employee.email;
+          delete contract.employer;
+          delete contract.employee;
+
+          contract.employer = tmpEmployer;
+          contract.employee = tmpEmployee;
+        });
+
+        res.status(200).send({
+          success: 'true',
+          length: data.length,
+          data: {
+            contracts: data,
+          },
+        });
+      });
+  } catch (err) {
+    res.status(404).send({ success: false });
+  }
+};
+
 export default {
   getUser,
   updateUser,
   addTrade,
   login,
+  getAllContracts,
 };

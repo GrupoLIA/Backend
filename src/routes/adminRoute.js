@@ -12,5 +12,8 @@ router
   .put(auth, allow('admin'), adminController.addTrade);
 
 router.route('/login').post(adminController.login);
+router
+  .route('/contracts')
+  .get(auth, allow('admin'), adminController.getAllContracts);
 
 export default router;
