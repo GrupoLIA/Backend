@@ -3,40 +3,26 @@ import Review from '../models/review';
 import User from '../models/user';
 
 const getAllReviews = async (req, res) => {
-  // not implemented on frontend
   try {
-    if (!req.params.userID) {
-      // Deberia tirar una exception y cortar acá en esta linea
-      const reviews = await Review.find();
+    const contracts = await Contract.find({
+      employee: req.params.userID,
+      status: 'accepted',
+      has_review: true,
+    });
 
-      res.status(200).send({
-        success: 'true',
-        length: reviews.length,
-        data: {
-          reviews,
-        },
-      });
-    } else {
-      const contracts = await Contract.find({
-        employee: req.params.userID,
-        status: 'accepted',
-        has_review: true,
-      });
+    const aux = await Promise.all(
+      contracts.map(async (value) => {
+        return await value.populate('reviews').execPopulate();
+      })
+    );
 
-      const aux = await Promise.all(
-        contracts.map(async (value) => {
-          return await value.populate('reviews').execPopulate();
-        })
-      );
+    const reviews = aux.flatMap((value) => value.reviews);
 
-      const reviews = aux.flatMap((value) => value.reviews);
-
-      res.status(200).send({
-        success: 'true',
-        length: reviews.length,
-        reviews,
-      });
-    }
+    res.status(200).send({
+      success: 'true',
+      length: reviews.length,
+      reviews,
+    });
   } catch (err) {
     res.status(404).send({ success: false, error: err.message });
   }
