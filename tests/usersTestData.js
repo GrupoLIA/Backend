@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
-const secretKey = process.env.SECRETKEY;
+const secretKey = process.env.SECRETKEY || 'insecure_key';
 
 const user1ID = new mongoose.Types.ObjectId();
 const user1 = {

@@ -101,7 +101,7 @@ userSchema.methods.hasTradeExpired = function (trade) {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const secretKey = process.env.SECRETKEY;
+  const secretKey = process.env.SECRETKEY || 'insecure_key';
   const token = jwt.sign(
     { _id: user._id.toString(), role: user.role },
     secretKey
