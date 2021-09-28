@@ -10,7 +10,8 @@
     "build-local": "babel ./src -d dist-local/",
     "start-local": "npm run build-local && env-cmd -f local.env node dist-local/index.js",
     "watch-local": "nodemon --watch ./src --exec npm run start-local",
-    "test": "env-cmd -f .env jest --watch"
+    "test-cloud": "env-cmd -f .env jest --watch --detectOpenHandles --testTimeout=10000",
+    "test": "env-cmd -f local.env jest --watch --detectOpenHandles --testTimeout=10000"
   },
   "jest": {
     "testEnvironment": "node"
