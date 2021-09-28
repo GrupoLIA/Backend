@@ -4,7 +4,7 @@ import User from '../models/user';
 const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
-    const secretKey = process.env.SECRETKEY || 'hola';
+    const secretKey = process.env.SECRETKEY;
     const decoded = jwt.verify(token, secretKey);
 
     const user = await User.findOne({

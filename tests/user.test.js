@@ -6,7 +6,7 @@ import Review from '../src/models/review';
 import usersData from './usersTestData';
 import MOCK_DATA from './MOCK_DATA';
 
-beforeAll(async () => {
+beforeAll(async (done) => {
   await User.deleteMany();
   await Contract.deleteMany();
   await Review.deleteMany();
@@ -26,7 +26,7 @@ test('Should signup a new user', async () => {
     .post('/api/users/signup')
     .send({
       email: 'signup@test.com',
-      password: 'signup-test',
+      password: 'test',
     })
     .expect(201);
 });
@@ -52,13 +52,13 @@ test('Should not signin a non existing user', async () => {
 
 let contractID;
 
-test('Should create a contract between users (employee)[0] and (employer)[2]', async () => {
+test('Should create a contract between users (employee)[0] and (employer)[4]', async () => {
   const response = await request(app)
     .post('/api/contracts')
+    .set('Authorization', `Bearer ${usersData[4].tokens[0].token}`)
     .send({
-      employee: usersData[0]._id,
-      employer: usersData[2]._id,
-      trade: 'gasista',
+      employee: usersData[4]._id,
+      trade: 'plomero',
     })
     .expect(200);
   contractID = response.body.data.newContract._id;

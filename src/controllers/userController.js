@@ -83,25 +83,10 @@ const logout = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.userID);
-
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    res.send(user);
-  } catch (error) {
-    res.status(500).send();
-  }
-};
-
 export default {
   getAllUsers,
   signIn,
   signUp,
   readProfile,
   logout,
-  deleteUser,
 };

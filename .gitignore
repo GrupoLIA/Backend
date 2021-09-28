@@ -1,7 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,node,visualstudio,macos,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,node,visualstudio,macos,linux
 
-### Agregad por mi, saqué el build, no es necesario ese comando
+### Agregadas por mi, saqué el build, no es necesario ese comando
 /build
 
 /public
@@ -134,6 +134,7 @@ test.env
 .nuxt
 dist
 dist-test
+dist-local
 
 # Gatsby files
 .cache/

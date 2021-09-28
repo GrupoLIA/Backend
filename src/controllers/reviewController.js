@@ -28,21 +28,6 @@ const getAllReviews = async (req, res) => {
   }
 };
 
-const getReviewsFromUserByID = async (req, res) => {
-  try {
-    /*  const user = await User.findOneById(req.params.id);
-        -- Get all reviews where employee in Contract equals :userID
-        -- populate from review to contract in which employee equals :userID
-    */
-  } catch (err) {}
-};
-
-/*  
-/api/reviews/:contractID
-Only possible if the status of the contract the review references equals 'accepted' and
-the user making the review is the employer as in the contract
-*/
-
 const createReview = async (req, res) => {
   try {
     const contract = await Contract.findById(req.params.contractID);
@@ -100,4 +85,4 @@ const createReview = async (req, res) => {
   }
 };
 
-export default { getAllReviews, createReview, getReviewsFromUserByID };
+export default { getAllReviews, createReview };

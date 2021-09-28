@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
+const secretKey = process.env.SECRETKEY;
+
 const user1ID = new mongoose.Types.ObjectId();
 const user1 = {
   _id: user1ID,
-  email: 'EMPLEADO_1',
+  email: 'EMPLEADO_1@gmail.com',
   password: 'EMPLEADO_1',
   telephones: ['2995244782', '29425263879', '29425263879'],
   profile_description:
@@ -19,7 +21,6 @@ const user1 = {
       total_rating: 810,
       review_count: 180,
     },
-
     {
       trade: 'plomero',
       validation_date: Date.now(),
@@ -30,7 +31,7 @@ const user1 = {
   ],
   tokens: [
     {
-      token: jwt.sign({ _id: user1ID }, 'hola'),
+      token: jwt.sign({ _id: user1ID }, secretKey),
     },
   ],
 };
@@ -38,13 +39,13 @@ const user1 = {
 const user2ID = new mongoose.Types.ObjectId();
 const user2 = {
   _id: user2ID,
-  email: 'EMPLEADO_2',
+  email: 'EMPLEADO_2@gmail.com',
   password: 'EMPLEADO_2',
   avatar:
     'https://spoiler.bolavip.com/__export/1573585573064/sites/bolavip/img/2019/11/12/henry_cavill_argentina_comic_con_superman_crop1573585468551.jpg_1902800913.jpg',
   tokens: [
     {
-      token: jwt.sign({ _id: user2ID }, 'hola'),
+      token: jwt.sign({ _id: user2ID }, secretKey),
     },
   ],
 };
@@ -52,13 +53,13 @@ const user2 = {
 const user3ID = new mongoose.Types.ObjectId();
 const user3 = {
   _id: user3ID,
-  email: 'USER_1',
-  password: 'USER_1',
+  email: 'EMPLEADO_3@gmail.com',
+  password: 'EMPLEADO_3',
   avatar:
     'https://spoiler.bolavip.com/__export/1573585573064/sites/bolavip/img/2019/11/12/henry_cavill_argentina_comic_con_superman_crop1573585468551.jpg_1902800913.jpg',
   tokens: [
     {
-      token: jwt.sign({ _id: user3ID }, 'hola'),
+      token: jwt.sign({ _id: user3ID }, secretKey),
     },
   ],
 };
@@ -66,13 +67,13 @@ const user3 = {
 const user4ID = new mongoose.Types.ObjectId();
 const user4 = {
   _id: user4ID,
-  email: 'USER_2',
-  password: 'USER_2',
+  email: 'EMPLEADO_4@gmail.com',
+  password: 'EMPLEADO_4',
   avatar:
     'https://spoiler.bolavip.com/__export/1573585573064/sites/bolavip/img/2019/11/12/henry_cavill_argentina_comic_con_superman_crop1573585468551.jpg_1902800913.jpg',
   tokens: [
     {
-      token: jwt.sign({ _id: user4ID }, 'hola'),
+      token: jwt.sign({ _id: user4ID }, secretKey),
     },
   ],
 };
@@ -80,10 +81,10 @@ const user4 = {
 const user5ID = new mongoose.Types.ObjectId();
 const user5 = {
   _id: user5ID,
-  email: 'EMPLEADO_3',
-  password: 'EMPLEADO_3',
+  email: 'EMPLEADO_5',
+  password: 'EMPLEADO_5',
   telephones: ['2995175320'],
-  profile_description: 'Hola mi nombre es EMPLEADO_3 y soy plomero.',
+  profile_description: 'Mi nombre es EMPLEADO_5 y soy plomero.',
   avatar:
     'https://spoiler.bolavip.com/__export/1573585573064/sites/bolavip/img/2019/11/12/henry_cavill_argentina_comic_con_superman_crop1573585468551.jpg_1902800913.jpg',
   trades: [
@@ -97,7 +98,7 @@ const user5 = {
   ],
   tokens: [
     {
-      token: jwt.sign({ _id: user5ID }, 'hola'),
+      token: jwt.sign({ _id: user5ID }, secretKey),
     },
   ],
 };

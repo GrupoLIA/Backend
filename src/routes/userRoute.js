@@ -11,6 +11,5 @@ router.route('/signup').post(userController.signUp);
 router.route('/profile').get(auth, userController.readProfile);
 router.route('/logout').post(auth, userController.logout);
 router.route('/:userID/reviews').get(reviewController.getAllReviews);
-router.route('/:userID').delete(auth, userController.deleteUser);
 
 export default router;

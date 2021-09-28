@@ -52,12 +52,6 @@ const userSchema = mongoose.Schema(
         review_count: { type: Number, default: 0 },
       },
     ],
-    favorites: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: User,
-      },
-    ],
     tokens: [
       {
         token: {
@@ -107,7 +101,7 @@ userSchema.methods.hasTradeExpired = function (trade) {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const secretKey = process.env.SECRETKEY || 'hola';
+  const secretKey = process.env.SECRETKEY;
   const token = jwt.sign(
     { _id: user._id.toString(), role: user.role },
     secretKey

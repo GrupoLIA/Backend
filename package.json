@@ -7,9 +7,9 @@
     "build": "babel ./src -d dist/",
     "start": "npm run build && env-cmd -f .env node dist/index.js",
     "watch": "nodemon --watch ./src --exec npm run start",
-    "build-test": "babel ./src -d dist-test/",
-    "start-test": "env-cmd -f test.env npm run build-test && node dist-test/index.js",
-    "watch-test": "nodemon --watch ./src --exec npm run start-test",
+    "build-local": "babel ./src -d dist-local/",
+    "start-local": "npm run build-local && env-cmd -f local.env node dist-local/index.js",
+    "watch-local": "nodemon --watch ./src --exec npm run start-local",
     "test": "env-cmd -f .env jest --watch"
   },
   "jest": {
