@@ -1,9 +1,10 @@
 # Backend
 
 Backend de soporte implementado en node para proveer endpoints a un panel de administración y una aplicación móvil.
-Forma parte de la arquitectura de una aplicación de empleos de ámbito regional.
+Forma parte de la arquitectura de una aplicación de empleos de ámbito regional. 
 
-[INFORME / REPORT]: https://www.overleaf.com/read/nswvfymvymsb
+INFORME/REPORT: [Aplicacion para Oficios]
+
 
 ## Instalación
 
