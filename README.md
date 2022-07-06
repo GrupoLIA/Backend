@@ -3,6 +3,8 @@
 Backend de soporte implementado en node para proveer endpoints a un panel de administración y una aplicación móvil.
 Forma parte de la arquitectura de una aplicación de empleos de ámbito regional.
 
+[INFORME / REPORT]: https://www.overleaf.com/read/nswvfymvymsb
+
 ## Instalación
 
 1. Instalar [node] y opcionalmente [mongo] para desarrollo.
@@ -34,4 +36,4 @@ Para obtener información detallada sobre el proyecto dirigirse a [Aplicacion pa
 
 [node]: https://nodejs.org
 [mongo]: https://www.mongodb.com
-[aplicacion para oficios]: https://www.overleaf.com/project/5f46b246abe9bf0001dce417
+[aplicacion para oficios]: https://www.overleaf.com/read/nswvfymvymsb
